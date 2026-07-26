@@ -1,8 +1,18 @@
 import { Client, Account, Databases, ID, Query } from 'appwrite';
 
+const endpoint  = import.meta.env.VITE_APPWRITE_ENDPOINT  as string | undefined;
+const projectId = import.meta.env.VITE_APPWRITE_PROJECT_ID as string | undefined;
+
+if (!endpoint || !projectId) {
+  console.warn(
+    'Missing VITE_APPWRITE_ENDPOINT or VITE_APPWRITE_PROJECT_ID. ' +
+    'Create a .env.local file — see README.md for details.',
+  );
+}
+
 export const client = new Client()
-  .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT ?? 'https://fra.cloud.appwrite.io/v1')
-  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID ?? '69e62515000e9e781653');
+  .setEndpoint(endpoint ?? 'https://cloud.appwrite.io/v1')
+  .setProject(projectId ?? '');
 
 export const account  = new Account(client);
 export const databases = new Databases(client);
